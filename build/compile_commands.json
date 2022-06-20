@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/sophia-bhs/slow5_pod5_converter/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-9  -I/home/sophia-bhs/slow5_pod5_converter/.  -g   -o CMakeFiles/slow5_pod5_converter.dir/src/main.c.o   -c /home/sophia-bhs/slow5_pod5_converter/src/main.c",
+  "file": "/home/sophia-bhs/slow5_pod5_converter/src/main.c"
+},
+{
+  "directory": "/home/sophia-bhs/slow5_pod5_converter/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-9  -I/home/sophia-bhs/slow5_pod5_converter/.  -g   -o CMakeFiles/slow5_pod5_converter.dir/src/p2s_converter.c.o   -c /home/sophia-bhs/slow5_pod5_converter/src/p2s_converter.c",
+  "file": "/home/sophia-bhs/slow5_pod5_converter/src/p2s_converter.c"
+}
+]

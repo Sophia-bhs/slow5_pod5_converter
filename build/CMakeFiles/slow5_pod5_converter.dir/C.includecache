@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sophia-bhs/slow5_pod5_converter/src/main.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+p2s_converter.h
+/home/sophia-bhs/slow5_pod5_converter/src/p2s_converter.h
+
+/home/sophia-bhs/slow5_pod5_converter/src/p2s_converter.c
+p2s_converter.h
+/home/sophia-bhs/slow5_pod5_converter/src/p2s_converter.h
+
+/home/sophia-bhs/slow5_pod5_converter/src/p2s_converter.h
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+
