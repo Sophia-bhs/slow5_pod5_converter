@@ -18,8 +18,8 @@ int main (int argc, char *argv[]) {
 
     if (strcmp(argv[1], "p2s") == 0) {
         printf("%s\n",argv[1]);
+		p2s_main(argc, argv);
     }
-
     
     return 0;
 }
