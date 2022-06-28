@@ -2,7 +2,7 @@
  * @file pod5_reader.c
  * @brief pod5 reader
  * @author Sixiao Li (z5262083), Nidhi Paalpare (z5257492)
- * gcc pod5_reader.c -o pod5_reader |||./pod5_reader ../../converter_prep/1_pod5/output.pod5 ||| developing reader
+ * g++ src/pod5_reader.c -o p2s  -I src/pod5-format/include/ src/pod5-format/lib64/libpod5_format.a src/pod5-format/lib64/libarrow.a src/pod5-format/lib64/libzstd.a -lz -lpthread
  * @date 26/06/2022
  */
 #include "pod5_reader.h"
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
     /**** End of init ***/
 
     int read_count = 0;
-
+    // printf("hhhh %ld\n", batch_count);
     // //iterate through batches in the file
     // for (size_t batch_index = 0; batch_index < batch_count; ++batch_index) {
 
