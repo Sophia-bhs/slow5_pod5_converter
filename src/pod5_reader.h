@@ -6,7 +6,7 @@
 #include <string.h>
 #include <omp.h>
 #include <sys/time.h>
-#include "../../converter_prep/pod5-file-format/c++/pod5_format/c_api.h"
+#include "pod5-format/include/pod5_format/c_api.h"
 // #include <vector>
 #include <stdint.h>
 
