@@ -7,7 +7,7 @@
 #include <omp.h>
 #include <sys/time.h>
 #include "pod5-format/include/pod5_format/c_api.h"
-// #include <vector>
+#include <vector>
 #include <stdint.h>
 
 int pod5_reader_main (int argc, char *argv[]);
