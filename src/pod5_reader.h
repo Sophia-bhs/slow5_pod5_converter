@@ -25,6 +25,8 @@ typedef struct {
     double digitisation;
     double offset;
     double scale;
+    uint16_t channel;
+    uint8_t well;
     uint64_t len_raw_signal;
     int16_t* raw_signal;
 } rec_t;

@@ -104,6 +104,12 @@ int main(int argc, char *argv[]){
                 fprintf(stderr,"Failed to get read %ld signal row locations: %s\n", row, pod5_get_error_string());
             }
 
+            // Read out the pore params:
+            PoreDictData_t *pore_data = NULL;
+            if (pod5_get_pore(batch, pore, &pore_data) != POD5_OK) {
+                fprintf(stderr, "Failed to get read %ld pore_idx data: %s\n", row,  pod5_get_error_string());
+            }
+
             size_t total_sample_count = 0;
             for (size_t i = 0; i < signal_row_count; ++i) {
                 total_sample_count += signal_rows[i]->stored_sample_count;
@@ -126,8 +132,11 @@ int main(int argc, char *argv[]){
             rec[row].scale = calib_data->scale;
             rec[row].offset = calib_data->offset;
             rec[row].read_id = strdup(read_id_tmp);
+            rec[row].channel = pore_data->channel;
+            rec[row].well = pore_data->well;
 
             pod5_release_calibration(calib_data);
+            pod5_release_pore(pore_data);
             pod5_free_signal_row_info(signal_row_count, signal_rows.data());
 
             free(signal_rows_indices);
