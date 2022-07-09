@@ -110,6 +110,12 @@ int main(int argc, char *argv[]){
                 fprintf(stderr, "Failed to get read %ld pore_idx data: %s\n", row,  pod5_get_error_string());
             }
 
+            // Find the calibration info for a row in a read batch.
+            RunInfoDictData_t *run_info_data = NULL;
+            if (pod5_get_run_info(batch, run_info, &run_info_data) != POD5_OK) {
+                fprintf(stderr, "Failed to get read %ld run_info data: %s\n", row,  pod5_get_error_string());
+            }
+
             size_t total_sample_count = 0;
             for (size_t i = 0; i < signal_row_count; ++i) {
                 total_sample_count += signal_rows[i]->stored_sample_count;
@@ -137,9 +143,12 @@ int main(int argc, char *argv[]){
             rec[row].read_number = read_number;
             rec[row].median_before = median_before;
             rec[row].start_sample = start_sample;
+            rec[row].digitisation = run_info_data->adc_max-run_info_data->adc_min+1;
+            rec[row].range = rec[row].scale*rec[row].digitisation;
 
             pod5_release_calibration(calib_data);
             pod5_release_pore(pore_data);
+            pod5_release_run_info(run_info_data);
             pod5_free_signal_row_info(signal_row_count, signal_rows.data());
 
             free(signal_rows_indices);
