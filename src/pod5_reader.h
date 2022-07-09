@@ -25,10 +25,13 @@ typedef struct {
     double digitisation;
     double offset;
     double scale;
+    float median_before;
     uint16_t channel;
     uint8_t well;
     uint64_t len_raw_signal;
     int16_t* raw_signal;
+    uint32_t read_number;
+    uint64_t start_sample;
 } rec_t;
 
 

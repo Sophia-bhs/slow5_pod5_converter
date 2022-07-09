@@ -134,6 +134,9 @@ int main(int argc, char *argv[]){
             rec[row].read_id = strdup(read_id_tmp);
             rec[row].channel = pore_data->channel;
             rec[row].well = pore_data->well;
+            rec[row].read_number = read_number;
+            rec[row].median_before = median_before;
+            rec[row].start_sample = start_sample;
 
             pod5_release_calibration(calib_data);
             pod5_release_pore(pore_data);
