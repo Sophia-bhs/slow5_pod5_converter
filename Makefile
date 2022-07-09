@@ -1,7 +1,6 @@
-$(CC) = gcc
-converter:
-# 	$(CC) src/main.c src/p2s_converter.c -o converter
-	$(CC) src/main.c src/p2s_converter.c -o converter -I src/pod5-format/include/ src/pod5-format/lib/libpod5_format.so
+CC = g++
+p2s:
+	$(CC) src/main.c src/pod5_reader.c -o p2s -I src/pod5-format/include/ src/pod5-format/lib64/libpod5_format.a src/pod5-format/lib64/libarrow.a src/pod5-format/lib64/libzstd.a -lz -lpthread
 
 clean:
-	rm converter
+	rm *.o p2s

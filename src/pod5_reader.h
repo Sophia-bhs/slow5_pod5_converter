@@ -10,7 +10,7 @@
 #include <vector>
 #include <stdint.h>
 
-int pod5_reader_main (int argc, char *argv[]);
+int pod5_reader(int argc, char *argv[]);
 
 static inline double realtime(void) {
     struct timeval tp;

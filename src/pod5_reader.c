@@ -7,11 +7,7 @@
  */
 #include "pod5_reader.h"
 
-int main(int argc, char *argv[]){
-    if(argc != 2) {
-        fprintf(stderr, "Usage: %s in_file.pod5\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+int pod5_reader(int argc, char *argv[]){
 
     double tot_time = 0;
     double t0 = 0 ;
@@ -38,7 +34,7 @@ int main(int argc, char *argv[]){
     /**** End of init ***/
 
     int read_count = 0;
-    printf("hhhh %ld\n", batch_count);
+
     //iterate through batches in the file
     for (size_t batch_index = 0; batch_index < batch_count; ++batch_index) {
 
