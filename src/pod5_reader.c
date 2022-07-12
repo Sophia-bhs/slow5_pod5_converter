@@ -176,7 +176,7 @@ int pod5_reader(int argc, char *argv[]){
         if (pod5_free_read_batch(batch) != POD5_OK) {
             fprintf(stderr,"Failed to release batch\n");
         }
-
+        //write to a slow5 file - function slow5_writer.h
         for (size_t row = 0; row < batch_row_count; ++row) {
             free(rec[row].read_id);
             free(rec[row].raw_signal);
