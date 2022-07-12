@@ -71,8 +71,10 @@ int pod5_reader(int argc, char *argv[]){
             read_count += 1;
 
             char read_id_tmp[37];
-            //Why????
-            pod5_error_t err = pod5_format_read_id(read_id, read_id_tmp);
+
+            if (pod5_format_read_id(read_id, read_id_tmp) != POD5_OK) {
+                fprintf(stderr, "Failed to get read %ld as a readable read id string: %s\n", row,  pod5_get_error_string());
+            }
 
             // Now read out the calibration params:
             CalibrationDictData_t *calib_data = NULL;
@@ -113,13 +115,13 @@ int pod5_reader(int argc, char *argv[]){
             }
 
             size_t total_sample_count = 0;
-            for (size_t i = 0; i < signal_row_count; ++i) {
+            for (size_t i = 0; (unsigned)i < signal_row_count; ++i) {
                 total_sample_count += signal_rows[i]->stored_sample_count;
             }
 
             int16_t *samples = (int16_t*)malloc(sizeof(int16_t)*total_sample_count);
             size_t samples_read_so_far = 0;
-            for (size_t i = 0; i < signal_row_count; ++i) {
+            for (size_t i = 0; (unsigned)i < signal_row_count; ++i) {
                 if (pod5_get_signal(file, signal_rows[i], signal_rows[i]->stored_sample_count,
                                    samples + samples_read_so_far) != POD5_OK) {
                     fprintf(stderr,"Failed to get read  %ld; signal: %s\n", row, pod5_get_error_string());
@@ -141,7 +143,7 @@ int pod5_reader(int argc, char *argv[]){
             rec[row].start_sample = start_sample;
             rec[row].digitisation = run_info_data->adc_max-run_info_data->adc_min+1;
             rec[row].range = rec[row].scale*rec[row].digitisation;
-
+            // if read 1, store run_info_data_read1 for header
             pod5_release_calibration(calib_data);
             pod5_release_pore(pore_data);
             pod5_release_run_info(run_info_data);
@@ -155,17 +157,17 @@ int pod5_reader(int argc, char *argv[]){
 
         //process and print (time not measured as we want to compare to the time it takes to read the file)
         double *sums = (double*)malloc(batch_row_count * sizeof(double));
-        #pragma omp parallel for
-        for(int i=0;i<batch_row_count;i++){
+        // #pragma omp parallel for
+        for(int i=0;(unsigned)i<batch_row_count;i++){
             uint64_t sum = 0;
 			//looking through records 
-            for(int j=0; j<rec[i].len_raw_signal; j++){
+            for(int j=0; (unsigned)j<rec[i].len_raw_signal; j++){
                 sum +=  ((rec[i].raw_signal[j] + rec[i].offset) * rec[i].scale);
             }
             sums[i] = sum;
         }
 		//printing in row format to stdout -- this is possiblly where we want to output our struct
-        for(int i=0;i<batch_row_count;i++){
+        for(int i=0;(unsigned)i<batch_row_count;i++){
             fprintf(stdout,"%s\t%f\n",rec[i].read_id,sums[i]); 
         }
         free(sums);
