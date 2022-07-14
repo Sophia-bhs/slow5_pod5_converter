@@ -19,13 +19,13 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records) {
 		exit(EXIT_FAILURE);
 	}
 	
-	//slow5_hdr_t* header = sp->header;
+	slow5_hdr_t* header = sp->header;
 	//example header add
-	//slow5_hdr_add("run_id", header);
+	slow5_hdr_add("run_id", header);
 
-	//slow5_hdr_set("run_id", "0", 0, header);
+	slow5_hdr_set("run_id", "0", 0, header);
 
-	//slow5_hdr_write(sp);
+	slow5_hdr_write(sp);
 
 
 
