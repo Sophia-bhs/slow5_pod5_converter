@@ -18,8 +18,8 @@ endif
 
 BINARY = p2s
 OBJ = $(BUILD_DIR)/main.o \
-    $(BUILD_DIR)/pod5_reader.o
-#      $(BUILD_DIR)/subtool2.o \
+    $(BUILD_DIR)/pod5_reader.o \
+    $(BUILD_DIR)/slow5_writer.o \
 
 PREFIX = /usr/local
 VERSION = `git describe --tags`
@@ -37,7 +37,10 @@ $(BINARY): $(OBJ) slow5lib/lib/libslow5.a src/pod5-format/lib64/libpod5_format.a
 $(BUILD_DIR)/main.o: src/main.c
 	$(CXX) $(CFLAGS) $(CPPFLAGS) $(LANGFLAG) $< -c -o $@
 
-$(BUILD_DIR)/pod5_reader.o: src/pod5_reader.c src/pod5_reader.h
+$(BUILD_DIR)/pod5_reader.o: src/pod5_reader.c src/pod5_reader.h 
+	$(CXX) $(CFLAGS) $(CPPFLAGS) $(LANGFLAG) $< -c -o $@
+
+$(BUILD_DIR)/slow5_writer.o: src/slow5_writer.c src/slow5_writer.h 
 	$(CXX) $(CFLAGS) $(CPPFLAGS) $(LANGFLAG) $< -c -o $@
 
 slow5lib/lib/libslow5.a:

@@ -154,31 +154,14 @@ int pod5_reader(int argc, char *argv[]){
         }
         tot_time += realtime() - t0;
         /**** Batch fetched ***/
-
-        //process and print (time not measured as we want to compare to the time it takes to read the file)
-        double *sums = (double*)malloc(batch_row_count * sizeof(double));
-        // #pragma omp parallel for
-        for(int i=0;(unsigned)i<batch_row_count;i++){
-            uint64_t sum = 0;
-			//looking through records 
-            for(int j=0; (unsigned)j<rec[i].len_raw_signal; j++){
-                sum +=  ((rec[i].raw_signal[j] + rec[i].offset) * rec[i].scale);
-            }
-            sums[i] = sum;
-        }
-		//printing in row format to stdout -- this is possiblly where we want to output our struct
-        for(int i=0;(unsigned)i<batch_row_count;i++){
-            fprintf(stdout,"%s\t%f\n",rec[i].read_id,sums[i]); 
-        }
-        free(sums);
-        fprintf(stderr,"batch printed with %ld reads\n",batch_row_count);
+        //write to a slow5 file - function slow5_writer.h
+        slow5_writer(argv[2], rec);
 
         /**** Deinit ***/
         t0 = realtime();
         if (pod5_free_read_batch(batch) != POD5_OK) {
             fprintf(stderr,"Failed to release batch\n");
         }
-        //write to a slow5 file - function slow5_writer.h
         for (size_t row = 0; row < batch_row_count; ++row) {
             free(rec[row].read_id);
             free(rec[row].raw_signal);

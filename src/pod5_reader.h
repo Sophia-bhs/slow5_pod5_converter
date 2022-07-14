@@ -19,7 +19,6 @@ static inline double realtime(void) {
     return tp.tv_sec + tp.tv_usec * 1e-6;
 }
 
-// Need more entries
 typedef struct {
     char* read_id;
     float offset;
@@ -38,5 +37,5 @@ typedef struct {
 //
 } rec_t;
 
-
+#include "slow5_writer.h"
 #endif

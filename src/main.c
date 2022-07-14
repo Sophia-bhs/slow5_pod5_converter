@@ -8,15 +8,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include <slow5/slow5.h>
 #include "pod5_reader.h"
-
 #include "pod5_format/c_api.h"
 
 int main (int argc, char *argv[]) {
 
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s in_file.pod5\n", argv[0]);
+    if (argc != 3) {
+        fprintf(stderr, "Usage: %s in_file.pod5 out_file.slow5\n", argv[0]);
         return EXIT_FAILURE;
     }
 
