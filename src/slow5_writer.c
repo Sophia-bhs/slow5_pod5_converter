@@ -6,10 +6,15 @@
  */
 
 #include "slow5_writer.h"
+#define FILE_PATH "test.blow5"
 
 int slow5_writer(char *output_path, rec_t *pod5_data_records) {
-
+    slow5_file_t *sp = slow5_open(FILE_PATH, "w");
     printf("in slow5 writer %s\n", output_path);
+    if(sp==NULL){
+        fprintf(stderr,"Error opening file!\n");
+        exit(EXIT_FAILURE);
+    }
     int batch_row_count = 1000;
     //process and print (time not measured as we want to compare to the time it takes to read the file)
     double *sums = (double*)malloc(batch_row_count * sizeof(double));
