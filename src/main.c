@@ -8,17 +8,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "p2s_converter.h"
+#include "pod5_reader.h"
+#include "pod5_format/c_api.h"
 
 int main (int argc, char *argv[]) {
-    if (argc != 4) {
-        fprintf(stderr, "Example Usage: %s p2s in_file.pod5 out_file.blow5\n", argv[0]);
+
+    if (argc != 3) {
+        fprintf(stderr, "Usage: %s in_file.pod5 out_file.slow5\n", argv[0]);
         return EXIT_FAILURE;
     }
 
-    if (strcmp(argv[1], "p2s") == 0) {
-        printf("%s\n",argv[1]);
-		p2s_main(argc, argv);
+    int ret = pod5_reader(argc, argv);
+    if (ret == 1) {
+        fprintf(stderr,"Error in reading POD5 file\n");
+        perror("perr: ");
+        exit(EXIT_FAILURE);
     }
     
     return 0;
