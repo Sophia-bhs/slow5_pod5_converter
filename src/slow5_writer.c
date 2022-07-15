@@ -7,7 +7,7 @@
 
 #include "slow5_writer.h"
 
-int slow5_writer(char *output_path, rec_t *pod5_data_records) {
+int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_count, file_status_t file_status) {
 
     printf("in slow5 writer %s\n", output_path);
 	// if file already exists
@@ -19,7 +19,7 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records) {
 		exit(EXIT_FAILURE);
 	}
 	
-	slow5_hdr_t* header = sp->header;
+    slow5_hdr_t* header = sp->header;
 	//example header add
 	slow5_hdr_add("run_id", header);
 
@@ -27,9 +27,6 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records) {
 
 	slow5_hdr_write(sp);
 
-
-
-    // int batch_row_count = 1000;
     // //process and print (time not measured as we want to compare to the time it takes to read the file)
     // double *sums = (double*)malloc(batch_row_count * sizeof(double));
     // // #pragma omp parallel for

@@ -9,7 +9,7 @@
 #include <slow5/slow5.h>
 
 
-int slow5_writer(char *output_path, rec_t *pod5_data_records);
+int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_count, file_status_t file_status);
 
 
 #endif
