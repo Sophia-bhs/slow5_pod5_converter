@@ -12,15 +12,16 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records) {
     printf("in slow5 writer %s\n", output_path);
 	// if file already exists
 	//if (access(output_path, F_OK) == -1) {
-
 	slow5_file_t *sp = slow5_open(output_path, "w");
 	if(sp==NULL){
 		fprintf(stderr,"Error opening file!\n");
 		exit(EXIT_FAILURE);
 	}
-	
+
 	slow5_hdr_t* header = sp->header;
+	
 	//example header add
+	
 	slow5_hdr_add("run_id", header);
 
 	slow5_hdr_set("run_id", "0", 0, header);

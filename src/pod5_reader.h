@@ -32,7 +32,7 @@ typedef struct {
     uint32_t read_number;
     uint64_t start_sample;
     int16_t digitisation;
-//RunInfoDictData_t run_info_data_read1;
+// RunInfoDictData_t run_info_data_read1;
 // read_group = 0; // assume only 1 read_group 
 //
 } rec_t;
