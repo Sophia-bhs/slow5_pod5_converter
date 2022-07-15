@@ -16,7 +16,7 @@
 
 typedef struct info_dict info_dict_t;
 
-int slow5_writer(char *output_path, rec_t *pod5_data_records);
+int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_count, file_status_t file_status);
 
 
 #endif
