@@ -2,4 +2,5 @@
 /.vscode
 
 # excutable
-p2s
+p2s 
+*.slow5

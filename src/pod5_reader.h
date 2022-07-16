@@ -48,7 +48,7 @@ typedef enum {
     FILE_END = 2,
 } file_status_t;
 
-run_info_data_t run_info_to_flat_dic(RunInfoDictData_t *run_info_data);
+run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data);
 
 #include "slow5_writer.h"
 

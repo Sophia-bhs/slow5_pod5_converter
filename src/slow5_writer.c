@@ -26,7 +26,7 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 	slow5_hdr_set("run_id", "0", 0, header);
 
 	slow5_hdr_write(sp);
-
+    printf("Info dict ready: key = %s; value = %s\n", pod5_data_records[0].info_dic->keys[0], pod5_data_records[0].info_dic->values[0]);
     // //process and print (time not measured as we want to compare to the time it takes to read the file)
     // double *sums = (double*)malloc(batch_row_count * sizeof(double));
     // // #pragma omp parallel for
