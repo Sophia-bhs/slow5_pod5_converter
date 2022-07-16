@@ -18,15 +18,12 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 		exit(EXIT_FAILURE);
 	}
 	
-    slow5_hdr_t* header = sp->header;
-	//example header add
-	
-	slow5_hdr_add("run_id", header);
-
-	slow5_hdr_set("run_id", "0", 0, header);
+	set_header_attr(sp, pod5_data_records);
 
 	slow5_hdr_write(sp);
-    printf("Info dict ready: key = %s; value = %s\n", pod5_data_records[0].info_dic->keys[0], pod5_data_records[0].info_dic->values[0]);
+	//slow5_write("0", sp);
+    //printf("Info dict ready: key = %s; value = %s\n", pod5_data_records[0].info_dic->keys[0], pod5_data_records[0].info_dic->values[0]);
+
     // //process and print (time not measured as we want to compare to the time it takes to read the file)
     // double *sums = (double*)malloc(batch_row_count * sizeof(double));
     // // #pragma omp parallel for
@@ -46,4 +43,19 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
     // fprintf(stderr,"batch printed with %d reads\n",batch_row_count);
 
     return 0;
+}
+
+void set_header_attr(slow5_file_t *sp, rec_t *pod5_data_records) {
+	slow5_hdr_t* header = sp->header;
+
+	for (int i = 0;i <= (int) pod5_data_records[0].info_dic->size;i++) {
+		if(slow5_hdr_add(pod5_data_records[0].info_dic->keys[i], header) < 0) {
+			fprintf(stderr,"Error adding %s attribute\n", pod5_data_records[0].info_dic->keys[i]);
+    		exit(EXIT_FAILURE);
+		}
+		if(slow5_hdr_set(pod5_data_records[0].info_dic->keys[i], pod5_data_records[0].info_dic->values[i], 0, header) < 0) {
+			fprintf(stderr,"Error setting %s attribute\n", pod5_data_records[0].info_dic->keys[i]);
+    		exit(EXIT_FAILURE);
+		}
+	} 
 }

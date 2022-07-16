@@ -196,18 +196,18 @@ run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data) {
     size_t tracking_id_size = run_info_data->tracking_id.size;
     run_info_data_t *info_dic = (run_info_data_t *)malloc(sizeof(run_info_data_t));
     if (info_dic == NULL) {
-        printf("filed to malloc info dict\n");
+        printf("failed to malloc info dict\n");
         return info_dic;
     }
     info_dic->keys = (const char**)malloc((context_tags_size + tracking_id_size) * sizeof (char*));
     if (info_dic->keys == NULL) {
-        printf("filed to malloc keys\n");
+        printf("failed to malloc keys\n");
         free(info_dic);
         return info_dic;
     }
     info_dic->values = (const char**)malloc((context_tags_size + tracking_id_size) * sizeof (char*));
     if (info_dic->values == NULL) {
-        printf("filed to malloc values\n");
+        printf("failed to malloc values\n");
         free(info_dic);
         free(info_dic->keys);
         return info_dic;
