@@ -52,7 +52,7 @@ int pod5_reader(int argc, char *argv[]){
         }
 
         rec_t *rec = (rec_t*)malloc(batch_row_count * sizeof(rec_t));
-
+        run_info_data_t *info_dic = NULL;
         for (size_t row = 0; row < batch_row_count; ++row) {
             uint8_t read_id[16];
             int16_t pore = 0;
@@ -129,8 +129,10 @@ int pod5_reader(int argc, char *argv[]){
 
                 samples_read_so_far += signal_rows[i]->stored_sample_count;
             }
-            
-            run_info_data_t info_dic = run_info_to_flat_dic(run_info_data);
+            // Info dict is used for header writing, therefore only need to be read once
+            if (row == 0) {
+                info_dic = run_info_to_flat_dic(run_info_data);
+            }
             
             rec[row].len_raw_signal = samples_read_so_far;
             rec[row].raw_signal = samples;
@@ -145,9 +147,7 @@ int pod5_reader(int argc, char *argv[]){
             rec[row].digitisation = run_info_data->adc_max-run_info_data->adc_min+1;
             rec[row].range = rec[row].scale*rec[row].digitisation;
             rec[row].read_group = 0;
-            rec[row].info_dic = &info_dic;
-            // printf("!!!!!%s!!!!!\n", info_dic.keys[0]);
-            // printf("!??!!!!%s!!!!!\n", rec[row].info_dic->keys[1]);
+            rec[row].info_dic = info_dic;
             // if read 1, store run_info_data_read1 for header
             pod5_release_calibration(calib_data);
             pod5_release_pore(pore_data);
@@ -155,14 +155,12 @@ int pod5_reader(int argc, char *argv[]){
             pod5_free_signal_row_info(signal_row_count, signal_rows.data());
 
             free(signal_rows_indices);
-            // printf("!??!!!!%s!!!!!\n", rec[row].info_dic->keys[1]);
         }
-        printf("!$$$!!!!%s!!!!!\n", rec[1].info_dic->keys[1]);
+
         tot_time += realtime() - t0;
         /**** Batch fetched ***/
         //write to a slow5 file - function slow5_writer.h
         slow5_writer(argv[2], rec, batch_row_count, file_status);
-        printf("!$$$!!!!%s!!!!!\n", rec[1].info_dic->keys[1]);
         /**** Deinit ***/
         t0 = realtime();
         if (pod5_free_read_batch(batch) != POD5_OK) {
@@ -171,10 +169,11 @@ int pod5_reader(int argc, char *argv[]){
         for (size_t row = 0; row < batch_row_count; ++row) {
             free(rec[row].read_id);
             free(rec[row].raw_signal);
-            free(rec[row].info_dic->keys);
-            free(rec[row].info_dic->values);
-            free(rec[row].info_dic);
         }
+
+        free(rec[0].info_dic->keys);
+        free(rec[0].info_dic->values);
+        free(rec[0].info_dic);
         free(rec);
         tot_time += realtime() - t0;
         /**** End of Deinit***/
@@ -192,13 +191,27 @@ int pod5_reader(int argc, char *argv[]){
     return 0;
 }
 
-run_info_data_t run_info_to_flat_dic(RunInfoDictData_t *run_info_data) {
+run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data) {
     size_t context_tags_size = run_info_data->context_tags.size;
     size_t tracking_id_size = run_info_data->tracking_id.size;
-    run_info_data_t *info_dic = (run_info_data_t*)malloc(sizeof(run_info_data_t));
-    // Failed malloc checks
+    run_info_data_t *info_dic = (run_info_data_t *)malloc(sizeof(run_info_data_t));
+    if (info_dic == NULL) {
+        printf("filed to malloc info dict\n");
+        return info_dic;
+    }
     info_dic->keys = (const char**)malloc((context_tags_size + tracking_id_size) * sizeof (char*));
+    if (info_dic->keys == NULL) {
+        printf("filed to malloc keys\n");
+        free(info_dic);
+        return info_dic;
+    }
     info_dic->values = (const char**)malloc((context_tags_size + tracking_id_size) * sizeof (char*));
+    if (info_dic->values == NULL) {
+        printf("filed to malloc values\n");
+        free(info_dic);
+        free(info_dic->keys);
+        return info_dic;
+    }
 
     for (size_t context_tags_count = 0; context_tags_count < context_tags_size; ++context_tags_count) {
         char* key_i = strdup(run_info_data->context_tags.keys[context_tags_count]);
@@ -212,5 +225,5 @@ run_info_data_t run_info_to_flat_dic(RunInfoDictData_t *run_info_data) {
         info_dic->keys[tracking_id_count + context_tags_size] = key_i;
         info_dic->values[tracking_id_count + context_tags_size] = value_i;
     }
-    return *info_dic;
+    return info_dic;
 }
