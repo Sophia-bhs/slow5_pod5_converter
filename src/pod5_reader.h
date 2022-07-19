@@ -45,7 +45,6 @@ typedef struct {
 typedef enum {
     FILE_INIT = 0,
     FILE_MID = 1,
-    FILE_END = 2,
 } file_status_t;
 
 run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data);

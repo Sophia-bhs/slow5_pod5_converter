@@ -178,11 +178,8 @@ int pod5_reader(int argc, char *argv[]){
         tot_time += realtime() - t0;
         /**** End of Deinit***/
 
-        if (batch_index + 1 == batch_count) {
-            file_status = FILE_END;
-        } else {
-            file_status = FILE_MID;
-        }
+		file_status = FILE_MID;
+        
     }
 
     fprintf(stderr,"Reads: %d\n",read_count);
