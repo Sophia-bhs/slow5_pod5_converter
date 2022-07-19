@@ -20,6 +20,8 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 	
 	set_header_attr(sp, pod5_data_records);
 
+	set_header_aux(sp);
+
 	slow5_hdr_write(sp);
 	//slow5_write("0", sp);
     //printf("Info dict ready: key = %s; value = %s\n", pod5_data_records[0].info_dic->keys[0], pod5_data_records[0].info_dic->values[0]);
@@ -57,4 +59,28 @@ void set_header_attr(slow5_file_t *sp, rec_t *pod5_data_records) {
     		exit(EXIT_FAILURE);
 		}
 	} 
+}
+
+void set_header_aux(slow5_file_t *sp) {
+	slow5_hdr_t* header = sp->header;
+	if(slow5_aux_add("channel_number", SLOW5_STRING, header) < 0) {
+		fprintf(stderr,"Error adding channel_number auxillary field\n");
+		exit(EXIT_FAILURE);		
+	}
+	if(slow5_aux_add("median_before", SLOW5_DOUBLE, header) < 0) {
+		fprintf(stderr,"Error adding median_before auxillary field\n");
+		exit(EXIT_FAILURE);	
+	}
+	if(slow5_aux_add("read_number", SLOW5_UINT32_T, header) < 0) {
+		fprintf(stderr,"Error adding read_number auxillary field\n");
+		exit(EXIT_FAILURE);	
+	}
+	if(slow5_aux_add("start_mux", SLOW5_UINT8_T, header) < 0) {
+		fprintf(stderr,"Error adding start_mux auxillary field\n");
+		exit(EXIT_FAILURE);	
+	}
+	if(slow5_aux_add("start_time", SLOW5_UINT64_T, header) < 0) {
+		fprintf(stderr,"Error adding start_time auxillary field\n");
+		exit(EXIT_FAILURE);	
+	}
 }
