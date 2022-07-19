@@ -47,8 +47,7 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 
 void set_header_attr(slow5_file_t *sp, rec_t *pod5_data_records) {
 	slow5_hdr_t* header = sp->header;
-
-	for (int i = 0;i <= (int) pod5_data_records[0].info_dic->size;i++) {
+	for (int i = 0; i < (int)pod5_data_records[0].info_dic->size; i++) {
 		if(slow5_hdr_add(pod5_data_records[0].info_dic->keys[i], header) < 0) {
 			fprintf(stderr,"Error adding %s attribute\n", pod5_data_records[0].info_dic->keys[i]);
     		exit(EXIT_FAILURE);

@@ -225,5 +225,6 @@ run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data) {
         info_dic->keys[tracking_id_count + context_tags_size] = key_i;
         info_dic->values[tracking_id_count + context_tags_size] = value_i;
     }
+    info_dic->size = context_tags_size + tracking_id_size;
     return info_dic;
 }
