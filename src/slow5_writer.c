@@ -49,11 +49,11 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 	for (int i = 0; i < (int) batch_row_count; i++) {
 		set_record_primary_fields(slow5_record, sp, pod5_data_records[i]);
 		set_record_aux_fields(slow5_record, sp, pod5_data_records[i]);
+		slow5_write(slow5_record, sp);
 	}
 
-	slow5_write(slow5_record, sp);
 
-	slow5_rec_free(slow5_record);
+	// slow5_rec_free(slow5_record);
 
 	slow5_close(sp);
     return 0;
