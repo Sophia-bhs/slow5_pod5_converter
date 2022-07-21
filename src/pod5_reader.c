@@ -35,9 +35,10 @@ int pod5_reader(int argc, char *argv[]){
 
     int read_count = 0;
     file_status_t file_status = FILE_INIT;
+    run_info_data_t *info_dic = NULL;
     //iterate through batches in the file
     for (size_t batch_index = 0; batch_index < batch_count; ++batch_index) {
-        printf("pod5 %d \n", batch_index);
+        printf("pod5 %ld \n", batch_index);
         /**** Fetching a batch (disk loading, decompression, parsing in to memory arrays) ***/
         double t0 = realtime();
 
@@ -46,14 +47,13 @@ int pod5_reader(int argc, char *argv[]){
         if (pod5_get_read_batch(&batch, file, batch_index) != POD5_OK) {
            fprintf(stderr,"Failed to get batch: %s\n", pod5_get_error_string());
         }
-        printf("pod5 there \n");
+
         size_t batch_row_count = 0;
         if (pod5_get_read_batch_row_count(&batch_row_count, batch) != POD5_OK) {
             fprintf(stderr,"Failed to get batch row count\n");
         }
 
         rec_t *rec = (rec_t*)malloc(batch_row_count * sizeof(rec_t));
-        run_info_data_t *info_dic = NULL;
         for (size_t row = 0; row < batch_row_count; ++row) {
             uint8_t read_id[16];
             int16_t pore = 0;
@@ -131,7 +131,7 @@ int pod5_reader(int argc, char *argv[]){
                 samples_read_so_far += signal_rows[i]->stored_sample_count;
             }
             // Info dict is used for header writing, therefore only need to be read once
-            if (row == 0) {
+            if (row == 0 && batch_index == 0) {
                 info_dic = run_info_to_flat_dic(run_info_data);
             }
             
@@ -173,9 +173,6 @@ int pod5_reader(int argc, char *argv[]){
             free(rec[row].raw_signal);
         }
 
-        free(rec[0].info_dic->keys);
-        free(rec[0].info_dic->values);
-        free(rec[0].info_dic);
         free(rec);
         tot_time += realtime() - t0;
         /**** End of Deinit***/
@@ -184,6 +181,13 @@ int pod5_reader(int argc, char *argv[]){
         
         printf("in pod5 reader: end\n");
     }
+    for (size_t info_dict_count = 0; info_dict_count < info_dic->size; ++info_dict_count) {
+        free((void*)info_dic->keys[info_dict_count]);
+        free((void*)info_dic->values[info_dict_count]);
+    }
+    free(info_dic->keys);
+    free(info_dic->values);
+    free(info_dic);
 
     fprintf(stderr,"Reads: %d\n",read_count);
     fprintf(stderr,"Time for getting samples %f\n", tot_time);
@@ -215,13 +219,13 @@ run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data) {
 
     for (size_t context_tags_count = 0; context_tags_count < context_tags_size; ++context_tags_count) {
         char* key_i = strdup(run_info_data->context_tags.keys[context_tags_count]);
-        char* value_i = (char*)run_info_data->context_tags.values[context_tags_count];
+        char* value_i = strdup(run_info_data->context_tags.values[context_tags_count]);
         info_dic->keys[context_tags_count] = key_i;
         info_dic->values[context_tags_count] = value_i;
     }
     for (size_t tracking_id_count = 0; tracking_id_count < tracking_id_size; ++tracking_id_count) {
         char* key_i = strdup(run_info_data->tracking_id.keys[tracking_id_count]);
-        char* value_i = (char*)run_info_data->tracking_id.values[tracking_id_count];
+        char* value_i = strdup(run_info_data->tracking_id.values[tracking_id_count]);
         info_dic->keys[tracking_id_count + context_tags_size] = key_i;
         info_dic->values[tracking_id_count + context_tags_size] = value_i;
     }
