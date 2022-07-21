@@ -40,20 +40,17 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 
     /******************* A SLOW5 record ************************/
 
-	slow5_rec_t* slow5_record = slow5_rec_init();
-    if(slow5_record == NULL){
-        fprintf(stderr,"Could not allocate space for a slow5 record.");
-        exit(EXIT_FAILURE);
-    }
-
 	for (int i = 0; i < (int) batch_row_count; i++) {
+		slow5_rec_t* slow5_record = slow5_rec_init();
+		if(slow5_record == NULL){
+			fprintf(stderr,"Could not allocate space for a slow5 record.");
+			exit(EXIT_FAILURE);
+		}
 		set_record_primary_fields(slow5_record, sp, pod5_data_records[i]);
 		set_record_aux_fields(slow5_record, sp, pod5_data_records[i]);
 		slow5_write(slow5_record, sp);
+		slow5_rec_free(slow5_record);
 	}
-
-
-	// slow5_rec_free(slow5_record);
 
 	slow5_close(sp);
     return 0;
@@ -106,7 +103,9 @@ void set_record_primary_fields(slow5_rec_t *slow5_record, slow5_file_t *sp, rec_
  	slow5_record->range = pod5_data_record.range;
 	for (int i = 0; i < (int)pod5_data_record.info_dic->size; i++) {
     	if (strcmp(pod5_data_record.info_dic->keys[i], "sample_frequency") == 0) {
-			slow5_record->sampling_rate = atof(pod5_data_record.info_dic->values[i]);
+			// slow5_record->sampling_rate = atof(pod5_data_record.info_dic->values[i]);
+			// Debug!!!!!!!!
+			slow5_record->sampling_rate = 4000;
 		}
 	}
     slow5_record->len_raw_signal = pod5_data_record.len_raw_signal;
