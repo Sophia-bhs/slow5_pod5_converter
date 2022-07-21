@@ -169,7 +169,7 @@ int pod5_reader(int argc, char *argv[]){
             fprintf(stderr,"Failed to release batch\n");
         }
         for (size_t row = 0; row < batch_row_count; ++row) {
-            free(rec[row].read_id);
+            // free(rec[row].read_id);
             free(rec[row].raw_signal);
         }
 
@@ -187,7 +187,7 @@ int pod5_reader(int argc, char *argv[]){
 
     fprintf(stderr,"Reads: %d\n",read_count);
     fprintf(stderr,"Time for getting samples %f\n", tot_time);
-
+    pod5_close_and_free_reader(file);
     return 0;
 }
 
