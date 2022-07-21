@@ -103,9 +103,8 @@ void set_record_primary_fields(slow5_rec_t *slow5_record, slow5_file_t *sp, rec_
  	slow5_record->range = pod5_data_record.range;
 	for (int i = 0; i < (int)pod5_data_record.info_dic->size; i++) {
     	if (strcmp(pod5_data_record.info_dic->keys[i], "sample_frequency") == 0) {
-			// slow5_record->sampling_rate = atof(pod5_data_record.info_dic->values[i]);
-			// Debug!!!!!!!!
-			slow5_record->sampling_rate = 4000;
+			char *ptr;
+			slow5_record->sampling_rate = strtod(pod5_data_record.info_dic->values[i], &ptr);
 		}
 	}
     slow5_record->len_raw_signal = pod5_data_record.len_raw_signal;

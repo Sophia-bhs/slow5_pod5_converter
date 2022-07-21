@@ -32,7 +32,7 @@ endif
 .PHONY: clean test
 
 $(BINARY): $(OBJ) slow5lib/lib/libslow5.a src/pod5-format/lib64/libpod5_format.a src/pod5-format/lib64/libarrow.a src/pod5-format/lib64/libzstd.a -lz -lpthread
-	$(CXX) $(CFLAGS) $(OBJ) slow5lib/lib/libslow5.a src/pod5-format/lib64/libpod5_format.a src/pod5-format/lib64/libarrow.a src/pod5-format/lib64/libzstd.a -lz -lpthread $(LDFLAGS) -o $@
+	$(CXX) $(CFLAGS) $(OBJ) slow5lib/lib/libslow5.a src/pod5-format/lib64/libpod5_format.a src/pod5-format/lib64/libarrow.a src/pod5-format/lib64/libzstd.a -lz -lpthread -ljemalloc $(LDFLAGS) -o $@
 
 $(BUILD_DIR)/main.o: src/main.c
 	$(CXX) $(CFLAGS) $(CPPFLAGS) $(LANGFLAG) $< -c -o $@
