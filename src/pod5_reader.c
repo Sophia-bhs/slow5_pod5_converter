@@ -37,15 +37,16 @@ int pod5_reader(int argc, char *argv[]){
     file_status_t file_status = FILE_INIT;
     //iterate through batches in the file
     for (size_t batch_index = 0; batch_index < batch_count; ++batch_index) {
-
+        printf("pod5 %d \n", batch_index);
         /**** Fetching a batch (disk loading, decompression, parsing in to memory arrays) ***/
         double t0 = realtime();
 
         Pod5ReadRecordBatch_t* batch = NULL;
+        printf("pod5 here \n");
         if (pod5_get_read_batch(&batch, file, batch_index) != POD5_OK) {
            fprintf(stderr,"Failed to get batch: %s\n", pod5_get_error_string());
         }
-
+        printf("pod5 there \n");
         size_t batch_row_count = 0;
         if (pod5_get_read_batch_row_count(&batch_row_count, batch) != POD5_OK) {
             fprintf(stderr,"Failed to get batch row count\n");
@@ -156,18 +157,19 @@ int pod5_reader(int argc, char *argv[]){
 
             free(signal_rows_indices);
         }
-
+        printf("in pod5 reader: before\n");
         tot_time += realtime() - t0;
         /**** Batch fetched ***/
         //write to a slow5 file - function slow5_writer.h
         slow5_writer(argv[2], rec, batch_row_count, file_status);
+        printf("in pod5 reader: after\n");
         /**** Deinit ***/
         t0 = realtime();
         if (pod5_free_read_batch(batch) != POD5_OK) {
             fprintf(stderr,"Failed to release batch\n");
         }
         for (size_t row = 0; row < batch_row_count; ++row) {
-            free(rec[row].read_id);
+            // free(rec[row].read_id);
             free(rec[row].raw_signal);
         }
 
@@ -180,11 +182,12 @@ int pod5_reader(int argc, char *argv[]){
 
 		file_status = FILE_MID;
         
+        printf("in pod5 reader: end\n");
     }
 
     fprintf(stderr,"Reads: %d\n",read_count);
     fprintf(stderr,"Time for getting samples %f\n", tot_time);
-
+    pod5_close_and_free_reader(file);
     return 0;
 }
 

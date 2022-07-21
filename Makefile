@@ -8,7 +8,7 @@
 CC       = cc
 CXX      = g++
 CPPFLAGS += -I slow5lib/include/ -I src/pod5-format/include/
-CFLAGS   += -g -Wall -O2
+CFLAGS   += -g -Wall -ggdb3 -O2
 LDFLAGS  += $(LIBS) -lz
 BUILD_DIR = build
 
