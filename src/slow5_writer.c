@@ -35,7 +35,7 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 		if(sp==NULL){
 			fprintf(stderr,"Error opening file to append!\n");
 			exit(EXIT_FAILURE);
-		}		
+		}
 	}
 
     /******************* A SLOW5 record ************************/
@@ -52,7 +52,6 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 	}
 
 	slow5_write(slow5_record, sp);
-
 	slow5_rec_free(slow5_record);
 
 	slow5_close(sp);
