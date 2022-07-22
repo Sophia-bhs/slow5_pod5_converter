@@ -1,6 +1,6 @@
 /**
  * @file slow5_writer.c
- * @brief slow5 file writing program
+ * @brief SLOW5 file writing program
  * @author Sixiao Li (z5262083), Nidhi Paalpare (z5257492)
  * @date 14/07/2022
  */
@@ -9,8 +9,6 @@
 
 int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_count, file_status_t file_status) {
 
-    printf("in slow5 writer %s\n", output_path);
-	// if file already exists
 	slow5_file_t *sp = NULL;
 	if (file_status == FILE_INIT) {
 		sp = slow5_open(output_path, "w");
@@ -95,25 +93,27 @@ void set_header_aux(slow5_file_t *sp) {
 }
 
 void set_record_primary_fields(slow5_rec_t *slow5_record, slow5_file_t *sp, rec_t pod5_data_record) {
+	// Convert POD5 -> SLOW5
 	slow5_record->read_id = pod5_data_record.read_id;
 	slow5_record->read_id_len = strlen(slow5_record->read_id);
 	slow5_record->read_group = pod5_data_record.read_group;
 	slow5_record->digitisation = pod5_data_record.digitisation;
 	slow5_record->offset = pod5_data_record.offset;
  	slow5_record->range = pod5_data_record.range;
+	slow5_record->len_raw_signal = pod5_data_record.len_raw_signal;
+	
+	slow5_record->raw_signal = (int16_t *)malloc(sizeof(int16_t) * slow5_record->len_raw_signal);
+    if(slow5_record->raw_signal == NULL){
+        fprintf(stderr,"Could not allocate space for raw signal.");
+        exit(EXIT_FAILURE);
+    }
 	for (int i = 0; i < (int)pod5_data_record.info_dic->size; i++) {
     	if (strcmp(pod5_data_record.info_dic->keys[i], "sample_frequency") == 0) {
 			char *ptr;
 			slow5_record->sampling_rate = strtod(pod5_data_record.info_dic->values[i], &ptr);
 		}
 	}
-    slow5_record->len_raw_signal = pod5_data_record.len_raw_signal;
-	slow5_record->raw_signal = (int16_t *)malloc(sizeof(int16_t) * slow5_record->len_raw_signal);
-    if(slow5_record->raw_signal == NULL){
-        fprintf(stderr,"Could not allocate space for raw signal.");
-        exit(EXIT_FAILURE);
-    }
-    for(int i=0; i<(int)slow5_record->len_raw_signal; i++){
+    for(int i = 0; i < (int)slow5_record->len_raw_signal; i++){
         slow5_record->raw_signal[i] = i;
     }	
 }

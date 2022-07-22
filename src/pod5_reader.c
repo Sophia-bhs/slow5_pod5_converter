@@ -38,12 +38,10 @@ int pod5_reader(int argc, char *argv[]){
     run_info_data_t *info_dic = NULL;
     //iterate through batches in the file
     for (size_t batch_index = 0; batch_index < batch_count; ++batch_index) {
-        printf("pod5 %ld \n", batch_index);
         /**** Fetching a batch (disk loading, decompression, parsing in to memory arrays) ***/
         double t0 = realtime();
 
         Pod5ReadRecordBatch_t* batch = NULL;
-        printf("pod5 here \n");
         if (pod5_get_read_batch(&batch, file, batch_index) != POD5_OK) {
            fprintf(stderr,"Failed to get batch: %s\n", pod5_get_error_string());
         }
@@ -151,12 +149,10 @@ int pod5_reader(int argc, char *argv[]){
             rec[row].median_before = median_before;
             rec[row].start_sample = start_sample;
             rec[row].digitisation = calib_extra_data.digitisation;
-			//rec[row].digitisation = run_info_data->adc_max-run_info_data->adc_min+1;
             rec[row].range = calib_extra_data.range;
-			//rec[row].range = rec[row].scale*rec[row].digitisation;
             rec[row].read_group = 0;
             rec[row].info_dic = info_dic;
-            // if read 1, store run_info_data_read1 for header
+
             pod5_release_calibration(calib_data);
             pod5_release_pore(pore_data);
             pod5_release_run_info(run_info_data);
@@ -164,30 +160,27 @@ int pod5_reader(int argc, char *argv[]){
 
             free(signal_rows_indices);
         }
-        printf("in pod5 reader: before\n");
+
         tot_time += realtime() - t0;
-        /**** Batch fetched ***/
-        //write to a slow5 file - function slow5_writer.h
-        slow5_writer(argv[2], rec, batch_row_count, file_status);
-        printf("in pod5 reader: after\n");
-        /**** Deinit ***/
         t0 = realtime();
+        /**** Write Batch ***/
+        slow5_writer(argv[2], rec, batch_row_count, file_status);
+        fprintf(stderr, "Coverting, please wait %ld/%ld.\n", batch_index + 1, batch_count);
+        
+        /**** Deinit ***/
         if (pod5_free_read_batch(batch) != POD5_OK) {
             fprintf(stderr,"Failed to release batch\n");
         }
         for (size_t row = 0; row < batch_row_count; ++row) {
-            // free(rec[row].read_id);
             free(rec[row].raw_signal);
         }
-
         free(rec);
         tot_time += realtime() - t0;
         /**** End of Deinit***/
 
 		file_status = FILE_MID;
-        
-        printf("in pod5 reader: end\n");
     }
+    
     for (size_t info_dict_count = 0; info_dict_count < info_dic->size; ++info_dict_count) {
         free((void*)info_dic->keys[info_dict_count]);
         free((void*)info_dic->values[info_dict_count]);
@@ -196,9 +189,10 @@ int pod5_reader(int argc, char *argv[]){
     free(info_dic->values);
     free(info_dic);
 
-    fprintf(stderr,"Reads: %d\n",read_count);
-    fprintf(stderr,"Time for getting samples %f\n", tot_time);
     pod5_close_and_free_reader(file);
+
+    fprintf(stderr, "Reads: %d\n", read_count);
+    fprintf(stderr, "Time for getting samples %f\n", tot_time);
     return 0;
 }
 
@@ -207,18 +201,18 @@ run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data) {
     size_t tracking_id_size = run_info_data->tracking_id.size;
     run_info_data_t *info_dic = (run_info_data_t *)malloc(sizeof(run_info_data_t));
     if (info_dic == NULL) {
-        printf("failed to malloc info dict\n");
+        fprintf(stderr, "Failed to malloc info dict\n");
         return info_dic;
     }
     info_dic->keys = (const char**)malloc((context_tags_size + tracking_id_size) * sizeof (char*));
     if (info_dic->keys == NULL) {
-        printf("failed to malloc keys\n");
+        fprintf(stderr, "Failed to malloc info keys\n");
         free(info_dic);
         return info_dic;
     }
     info_dic->values = (const char**)malloc((context_tags_size + tracking_id_size) * sizeof (char*));
     if (info_dic->values == NULL) {
-        printf("failed to malloc values\n");
+        fprintf(stderr, "Failed to malloc info values\n");
         free(info_dic);
         free(info_dic->keys);
         return info_dic;
@@ -237,5 +231,6 @@ run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data) {
         info_dic->values[tracking_id_count + context_tags_size] = value_i;
     }
     info_dic->size = context_tags_size + tracking_id_size;
+    
     return info_dic;
 }

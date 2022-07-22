@@ -1,6 +1,6 @@
 /**
  * @file main.c
- * @brief main program
+ * @brief main program for the POD5 -> SLOW5 converter
  * @author Sixiao Li (z5262083), Nidhi Paalpare (z5257492)
  * @date 20/06/2022
  */
