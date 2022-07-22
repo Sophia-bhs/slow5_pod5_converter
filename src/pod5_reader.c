@@ -165,7 +165,7 @@ int pod5_reader(int argc, char *argv[]){
         t0 = realtime();
         /**** Write Batch ***/
         slow5_writer(argv[2], rec, batch_row_count, file_status);
-        fprintf(stderr, "Coverting, please wait %ld/%ld.\n", batch_index + 1, batch_count);
+        fprintf(stderr, "Converting, please wait %ld/%ld.\n", batch_index + 1, batch_count);
         
         /**** Deinit ***/
         if (pod5_free_read_batch(batch) != POD5_OK) {
