@@ -20,6 +20,12 @@ static inline double realtime(void) {
 }
 
 typedef struct {
+    size_t size;
+    char const** keys;
+    char const** values;
+} run_info_data_t;
+
+typedef struct {
     char* read_id;
     float offset;
     float scale;
@@ -31,11 +37,18 @@ typedef struct {
     int16_t* raw_signal;
     uint32_t read_number;
     uint64_t start_sample;
-    int16_t digitisation;
-//RunInfoDictData_t run_info_data_read1;
-// read_group = 0; // assume only 1 read_group 
-//
+    uint16_t digitisation;
+    uint32_t read_group;
+    run_info_data_t *info_dic;
 } rec_t;
 
+typedef enum {
+    FILE_INIT = 0,
+    FILE_MID = 1,
+} file_status_t;
+
+run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data);
+
 #include "slow5_writer.h"
+
 #endif

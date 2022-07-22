@@ -4,11 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "pod5_reader.h"
 #include <slow5/slow5.h>
 
+// typedef struct info_dict info_dict_t;
 
-int slow5_writer(char *output_path, rec_t *pod5_data_records);
-
+int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_count, file_status_t file_status);
+void set_header_attr(slow5_file_t *sp, rec_t *pod5_data_records);
+void set_header_aux(slow5_file_t *sp);
+void set_record_primary_fields(slow5_rec_t *slow5_record, slow5_file_t *sp, rec_t pod5_data_record);
+void set_record_aux_fields(slow5_rec_t *slow5_record, slow5_file_t *sp, rec_t pod5_data_record);
 
 #endif
