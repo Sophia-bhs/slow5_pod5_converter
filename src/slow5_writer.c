@@ -76,7 +76,7 @@ void set_header_aux(slow5_file_t *sp) {
 		fprintf(stderr,"Error adding channel_number auxillary field\n");
 		exit(EXIT_FAILURE);		
 	}
-	if(slow5_aux_add("median_before", SLOW5_DOUBLE, header) < 0) {
+	if(slow5_aux_add("median_before", SLOW5_FLOAT, header) < 0) {
 		fprintf(stderr,"Error adding median_before auxillary field\n");
 		exit(EXIT_FAILURE);	
 	}

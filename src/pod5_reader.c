@@ -83,6 +83,11 @@ int pod5_reader(int argc, char *argv[]){
                 fprintf(stderr, "Failed to get read %ld calibration_idx data: %s\n", row,  pod5_get_error_string());
             }
 
+			CalibrationExtraData_t calib_extra_data;
+			if (pod5_get_calibration_extra_info(batch, calibration_idx, run_info, &calib_extra_data) != POD5_OK) {
+                fprintf(stderr, "Failed to get read %ld calibration_idx extra data: %s\n", row,  pod5_get_error_string());
+            } 
+
             // Find the absolute indices of the signal rows in the signal table
             uint64_t *signal_rows_indices= (uint64_t*) malloc(signal_row_count * sizeof(uint64_t));
 
@@ -145,8 +150,10 @@ int pod5_reader(int argc, char *argv[]){
             rec[row].read_number = read_number;
             rec[row].median_before = median_before;
             rec[row].start_sample = start_sample;
-            rec[row].digitisation = run_info_data->adc_max-run_info_data->adc_min+1;
-            rec[row].range = rec[row].scale*rec[row].digitisation;
+            rec[row].digitisation = calib_extra_data.digitisation;
+			//rec[row].digitisation = run_info_data->adc_max-run_info_data->adc_min+1;
+            rec[row].range = calib_extra_data.range;
+			//rec[row].range = rec[row].scale*rec[row].digitisation;
             rec[row].read_group = 0;
             rec[row].info_dic = info_dic;
             // if read 1, store run_info_data_read1 for header

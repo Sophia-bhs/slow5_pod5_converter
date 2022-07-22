@@ -37,7 +37,7 @@ typedef struct {
     int16_t* raw_signal;
     uint32_t read_number;
     uint64_t start_sample;
-    int16_t digitisation;
+    uint16_t digitisation;
     uint32_t read_group;
     run_info_data_t *info_dic;
 } rec_t;
