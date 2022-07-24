@@ -18,9 +18,10 @@ int main (int argc, char *argv[]) {
 			printf("\n************************************************************\n");
 			printf("\tWelcome to the Pod5->Slow5 converter 1.0.0!!\t\n");
 			printf("************************************************************\n\n");
-			printf("Usages:\n./p2s infile.pod5 outfile.slow5\n./p2s infile.pod5 outfile.blow5\n\n");
-			printf("infile: path to user's existing pod5 file\n");
-			printf("outfile: path to a slow5 or blow5 file named by the user which is created via the converter\n\n");
+			printf("Usages:\t./p2s infile.pod5 outfile.slow5\n\t./p2s infile.pod5 outfile.blow5\n\n");
+			printf("infile:  path to user's existing pod5 file\n\n");
+			printf("outfile: path to a slow5 or blow5 file named by\n");
+			printf("\t the user which is created via the converter\n\n");
 			exit(0);
 		} else {
         fprintf(stderr, "Usage: %s in_file.pod5 out_file.slow5\n", argv[0]);
