@@ -33,7 +33,7 @@ See SPECIFICATION.md for more details on the pod5 format. **need to add link**
 
 Conclusively the Pod5 and Slow5 file format both have their benefits, however Slow5 format prevails in it's memory efficiency, scalability and it's robustness across platforms. This project aims to establish is a format conversion tool which will allows users to convert their pod5 files to slow5 and reap the technical benefits. The primary languages used to build this project are C and C++ which ensures a reliable, safe and, principally, a fast conversion. 
 
-#See [DESIGN.md][design.md link] for details on the structure of the project 
+See [DESIGN.md][design.md link] for details on the structure of the project 
 
 # Example data:
 
