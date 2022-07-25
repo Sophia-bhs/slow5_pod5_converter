@@ -16,7 +16,7 @@ int slow5_writer(char *output_path, rec_t *pod5_data_records, size_t batch_row_c
 
 ### Function calls 
 
-**Note: A lot the functions called are from the slow5/slow5.h file (*link this*) included in slow5lib subdirectory**
+**Note: A lot the functions called are from [slow5/slow5.h][link slow5.h] included in slow5lib subdirectory**
 ```
 void set_header_attr(slow5_file_t *sp, rec_t *pod5_data_records);
 ```
@@ -40,3 +40,5 @@ set_record_aux_fields() - void function developed by us which sets aux field val
 ## Return Value
 
 Returns 0 upon successful batch write.
+
+[link slow5.h]: https://github.com/hasindu2008/slow5lib/blob/master/include/slow5/slow5.h 

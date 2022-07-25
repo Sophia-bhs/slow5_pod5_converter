@@ -55,7 +55,7 @@ typedef enum {
 
 ### Function calls 
 
-**Note: Most of the functions and errors called are from the pod5-format/include/c_api (*link this*) included in src directory**
+**Note: Most of the functions and errors called are from the [pod5-format/include/c_api][c_api link] included in src directory**
 
 ```
 run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data)
@@ -72,6 +72,7 @@ See [SLOW5WRITER.md][slow5writer.md link] for description
 
 Upon successful completion, pod5_reader returns a non negative integer (>=0).
 
+[c_api link]: https://github.com/nanoporetech/pod5-file-format/blob/master/c%2B%2B/pod5_format/c_api.h
 [slow5writer.md link]: https://github.com/Sophia-bhs/slow5_pod5_converter/blob/main/docs/SLOW5WRITER.md
 
 
