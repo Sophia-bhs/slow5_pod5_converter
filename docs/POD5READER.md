@@ -16,51 +16,40 @@ int pod5_reader(int argc, char *argv[])
 
 ### Data Structures 
 
-*Explanation here*
-```
-static inline double realtime(void) {
-    struct timeval tp;
-    struct timezone tzp;
-    gettimeofday(&tp, &tzp);
-    return tp.tv_sec + tp.tv_usec * 1e-6;
-}
-```
-
-*Explanation here*
+The *run_info_data_t* structure stores pod5 file header attributes and values. The structure has the following form:
 ```
 typedef struct {
     size_t size;
-    char const** keys;
-    char const** values;
+    char const** keys;			// header attributes
+    char const** values;		// header values	
 } run_info_data_t;
 ```
 
-*Explanation here*
+The *rec_t* structure stores a parsed pod5 record. The structure has the following form:
 ```
 typedef struct {
-    char* read_id;
-    float offset;
-    float scale;
-    float median_before;
-    float range;
-    uint16_t channel;
-    uint8_t well;
-    uint64_t len_raw_signal;
-    int16_t* raw_signal;
-    uint32_t read_number;
-    uint64_t start_sample;
-    int16_t digitisation;
-    uint32_t read_group;
-    run_info_data_t *info_dic;
+    char* read_id;				// the read ID
+    float offset;				// the offset parameter for the calibration
+    float scale;				// the scale parameter for the calibration
+    float median_before;		// the median before level
+    float range;				// the range of the calibrated channel in pA
+    uint16_t channel;			// the channel the pore type uses
+    uint8_t well;				// the well the pore type uses
+    uint64_t len_raw_signal;	// length of the raw signal array
+    int16_t* raw_signal;		// the actual raw signal array
+    uint32_t read_number;		// the read number
+    uint64_t start_sample;		// the start sample
+    int16_t digitisation;		// the digitisation value used by the sequencer, equal to: adc_max-adc_min+1
+    uint32_t read_group;		// the read group
+    run_info_data_t *info_dic;	// run_info_data_t struct containing header data
 } rec_t;
 ```
 
-*Explanation here*
+The *file_status_t* structure keeps track of the file's status during the conversion. The structure has the following form:
 ```
 typedef enum {
-    FILE_INIT = 0,
-    FILE_MID = 1,
-    FILE_END = 2,
+    FILE_INIT = 0,		// file has not been initialised 
+    FILE_MID = 1,		// file has been initialised
 } file_status_t;
 ```
 
