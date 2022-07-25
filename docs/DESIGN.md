@@ -39,8 +39,8 @@ Aided by:
 
 The core of the project is based in the src directory which contains our src code for the project:
 - main.c: calls int pod5_reader
-- Pod5_reader.c/h (*link this to pod5_reader.md*): calls [pod5_reader()][pod5reader link] which reads an inputted pod5 file and, for each batch, calls slow5_writer
-- Slow5_writer.c/h (*link this to slow5_writer.md*): calls [slow5_writer()][slow5writer link] writes batch data from inputted pod5 file to a slow5 file 
+- Pod5_reader.c/h: calls [pod5_reader()][pod5reader link] which reads an inputted pod5 file and, for each batch, calls slow5_writer
+- Slow5_writer.c/h: calls [slow5_writer()][slow5writer link] writes batch data from inputted pod5 file to a slow5 file 
 
 **main->(pod5_reader->slow5_writer)x(number of batches)->pod5_reader->main (*write this elegantly*)**
 
