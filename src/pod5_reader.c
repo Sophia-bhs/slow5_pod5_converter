@@ -137,13 +137,16 @@ int pod5_reader(int argc, char *argv[]){
             if (row == 0 && batch_index == 0) {
                 info_dic = run_info_to_flat_dic(run_info_data);
             }
+            int length = snprintf(NULL, 0, "%d", pore_data->channel);
+            char* channel_buffer = (char *)malloc( length + 1 );
+            snprintf(channel_buffer, 40,"%d",pore_data->channel);
             
             rec[row].len_raw_signal = samples_read_so_far;
             rec[row].raw_signal = samples;
             rec[row].scale = calib_data->scale;
             rec[row].offset = calib_data->offset;
             rec[row].read_id = strdup(read_id_tmp);
-            rec[row].channel = pore_data->channel;
+            rec[row].channel = channel_buffer;
             rec[row].well = pore_data->well;
             rec[row].read_number = read_number;
             rec[row].median_before = median_before;
