@@ -148,8 +148,8 @@ int pod5_reader(int argc, char *argv[]){
             rec[row].read_id = strdup(read_id_tmp);
             rec[row].channel = channel_buffer;
             rec[row].well = pore_data->well;
-            rec[row].read_number = read_number;
-            rec[row].median_before = median_before;
+            rec[row].read_number = (int32_t)read_number;
+            rec[row].median_before = (double)median_before;
             rec[row].start_sample = start_sample;
             rec[row].digitisation = calib_extra_data.digitisation;
             rec[row].range = calib_extra_data.range;
