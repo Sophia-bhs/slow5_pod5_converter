@@ -29,13 +29,13 @@ typedef struct {
     char* read_id;
     float offset;
     float scale;
-    float median_before;
+    double median_before;
     float range;
-    uint16_t channel;
+    char* channel;
     uint8_t well;
     uint64_t len_raw_signal;
     int16_t* raw_signal;
-    uint32_t read_number;
+    int32_t read_number;
     uint64_t start_sample;
     uint16_t digitisation;
     uint32_t read_group;

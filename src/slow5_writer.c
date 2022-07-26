@@ -70,15 +70,15 @@ void set_header_attr(slow5_file_t *sp, rec_t *pod5_data_records) {
 
 void set_header_aux(slow5_file_t *sp) {
 	slow5_hdr_t* header = sp->header;
-	if(slow5_aux_add("channel_number", SLOW5_UINT16_T, header) < 0) {
+	if(slow5_aux_add("channel_number", SLOW5_STRING, header) < 0) {
 		fprintf(stderr,"Error adding channel_number auxillary field\n");
 		exit(EXIT_FAILURE);		
 	}
-	if(slow5_aux_add("median_before", SLOW5_FLOAT, header) < 0) {
+	if(slow5_aux_add("median_before", SLOW5_DOUBLE, header) < 0) {
 		fprintf(stderr,"Error adding median_before auxillary field\n");
 		exit(EXIT_FAILURE);	
 	}
-	if(slow5_aux_add("read_number", SLOW5_UINT32_T, header) < 0) {
+	if(slow5_aux_add("read_number", SLOW5_INT32_T, header) < 0) {
 		fprintf(stderr,"Error adding read_number auxillary field\n");
 		exit(EXIT_FAILURE);	
 	}
@@ -120,7 +120,7 @@ void set_record_primary_fields(slow5_rec_t *slow5_record, slow5_file_t *sp, rec_
 
 void set_record_aux_fields(slow5_rec_t *slow5_record, slow5_file_t *sp, rec_t pod5_data_record) {
 
-    if(slow5_aux_set(slow5_record, "channel_number", &pod5_data_record.channel, sp->header) < 0){
+    if(slow5_aux_set_string(slow5_record, "channel_number", pod5_data_record.channel, sp->header) < 0){
         fprintf(stderr,"Error setting channel_number auxilliary field\n");
         exit(EXIT_FAILURE);
     }
@@ -140,4 +140,5 @@ void set_record_aux_fields(slow5_rec_t *slow5_record, slow5_file_t *sp, rec_t po
         fprintf(stderr,"Error setting start_time auxilliary field\n");
         exit(EXIT_FAILURE);
     }
+	free(pod5_data_record.channel);
 }
