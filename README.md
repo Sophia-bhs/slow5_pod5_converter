@@ -51,7 +51,7 @@ Convert single pod5 file with 10 reads using slow5-pod5-converter.
 
 ### How to view a slow5/blow5 file 
 
-`slow5tools` is a toolkit developed by used to visualise and manipulate slow5 files.
+`slow5tools` is a toolkit, developed by the team at Garvan, used to visualise and manipulate slow5 files.
 
 **Install slow5tools**
 
