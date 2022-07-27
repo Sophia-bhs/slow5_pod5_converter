@@ -70,7 +70,7 @@ See [SLOW5WRITER.md][slow5writer.md link] for description
 
 ## Return Value
 
-Upon successful completion, pod5_reader returns a non negative integer (>=0).
+Upon successful completion, pod5_reader returns 0.
 
 [c_api link]: https://github.com/nanoporetech/pod5-file-format/blob/master/c%2B%2B/pod5_format/c_api.h
 [slow5writer.md link]: https://github.com/Sophia-bhs/slow5_pod5_converter/blob/main/docs/SLOW5WRITER.md
