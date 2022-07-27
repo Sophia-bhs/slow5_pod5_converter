@@ -4,7 +4,6 @@
 
 - Easy to comprehend and execute compilation and usage 
 - Fast and reliable conversion 
-- Consistent across various platforms and compilers
 - Use minimal/controllable memory for peak memory effiicency
 
 ### Easy to comprehend and execute compilation and usage 
@@ -20,14 +19,6 @@ Aided by:
 Aided by:
 - Writing the src code in the C programming languagea, low-level time-efficient programming language, as well as referencing the appropriate c_apis and libraries 
 The program should ideally be able to to convert a pod5 file of 4000 reeds to slow5 in under 10 seconds.
-
-
-### Consistent across various platforms 
-
-Aided by:
-- A well documented environment setup which considers running the program on different computing systems (linux/windows/MacOS)
-- Slow5 which works efficiently with both SSD/NVME and HDD disks and how they access data
-- Makefile which keeps the compilation method consistent across all platforms 
 
 ### Use minimal/controllable memory for peak memory effiicency
 
