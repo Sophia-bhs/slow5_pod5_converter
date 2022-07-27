@@ -12,7 +12,7 @@ int pod5_reader(int argc, char *argv[])
 
 ## DESCRIPTION
 
-`pod5_reader()` takes a input paramaters args - the pod5 file name - and passes them through various c_api functions associated with reading a pod5 file developed by Oxford Nanopore technology. This process is ran through a for loop where the pod5 data is read batch by batch, and then through a for loop again to store all the data of each row of each batch in a struct record. 
+`pod5_reader()` takes a input paramaters args - the pod5 file name - and passes them through various c_api functions associated with reading a pod5 file, developed by Oxford Nanopore technology. This process is ran through a for loop where the pod5 data is read batch by batch, and then through a for loop again to store all the data of each row of each batch in a struct record. 
 
 ### Data Structures 
 

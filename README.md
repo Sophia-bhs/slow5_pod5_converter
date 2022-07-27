@@ -54,6 +54,7 @@ Convert single pod5 file with 10 reads using slow5-pod5-converter.
 `slow5tools` is a toolkit developed by used to visualise and manipulate slow5 files.
 
 **Install slow5tools**
+
 Follow instructions on setup/install here: https://github.com/hasindu2008/slow5tools
 Garvan's most recent release of slow5tools is *slow5tools-v0.5.0*.
 
