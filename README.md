@@ -34,7 +34,7 @@ See there releases [here][releases page pod5].
 
 The Pod5 file format, developed by Oxford Nanopore Technology, and Slow5 file format, developed by the team at Garvan Institute of Medical Research, both have their benefits, however slow5 format prevails in it's memory efficiency, scalability and it's variety of extensions. This project aims to establish a format conversion tool which will allows users to convert their pod5 files to slow5 and reap the technical benefits. The primary languages used to build this project are C and C++ which ensures a reliable, safe and, principally, a fast conversion. 
 
-For more on the Pod5 and Slow5 formats visit SPECIFICATION.md
+For more on the Pod5 and Slow5 formats visit [SPECIFICATION.md][specification.md link]
 
 See [DESIGN.md][design.md link] for details on the structure of the project 
 
@@ -75,4 +75,5 @@ Garvan's most recent release of slow5tools is *slow5tools-v0.5.0*.
 ```
 
 [design.md link]: https://github.com/Sophia-bhs/slow5_pod5_converter/blob/main/docs/DESIGN.md
+[specification.md link]: https://github.com/Sophia-bhs/slow5_pod5_converter/blob/main/docs/SPECIFICATION.md
 [releases page pod5]: https://github.com/nanoporetech/pod5-file-format/tags
