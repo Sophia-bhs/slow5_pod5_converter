@@ -40,8 +40,6 @@ See [DESIGN.md][design.md link] for details on the structure of the project
 
 ### Example data
 
-**tried to use pod5 multi_fast5_zip.pod5 as example data because its nice and small but won't let me push to git hub even though file isnt that big** - might need to change that example data 
-
 Convert single pod5 file with 10 reads using slow5-pod5-converter. 
 
 ```
