@@ -29,7 +29,8 @@ Aided by:
 ## Program structure 
 
 The core of the project is based in the src directory which contains our src code for the project:
-- Pod5_reader.c/h (*link this to pod5_reader.md*) which reads an inputted Pod5 file 
-- Slow5_writer.c/h (*link this to slow5_writer.md*) which writes Pod5 data to a slow5 formatted file 
+- [Pod5_reader.c/h][link to p.md] which reads an inputted Pod5 file 
+- [Slow5_writer.c/h][link to s.md] which writes Pod5 data to a slow5 formatted file 
 
-main->(pod5_reader->slow5_writer)x(number of batches)->pod5_reader->main (*write this elegantly*)
+[link to p.md]: https://github.com/Sophia-bhs/slow5_pod5_converter/blob/main/docs/POD5READER.md
+[link to s.md]: https://github.com/Sophia-bhs/slow5_pod5_converter/blob/main/docs/SLOW5WRITER.md
