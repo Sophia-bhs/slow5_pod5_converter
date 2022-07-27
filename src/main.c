@@ -18,7 +18,7 @@ int main (int argc, char *argv[]) {
 			printf("\n************************************************************\n");
 			printf("\tWelcome to the Pod5->Slow5 converter 1.0.0!!\t\n");
 			printf("************************************************************\n\n");
-			printf("Usages:\t./p2s [OPTION] [INPUT FILE] [OUTPUT FILE]\n\n");
+			printf("Usage:\t./p2s [OPTION] [INPUT FILE] [OUTPUT FILE]\n\n");
 			printf("OPTIONS:\n\t-h, --help\tDisplay this message and exit.\n\n");
 			printf("INPUT FILE:\n\tPath to user's existing pod5 file.\n\n");
 			printf("OUTPUT FILE:\n\tPath to a slow5 or blow5 file named by\n");
