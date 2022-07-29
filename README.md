@@ -60,7 +60,7 @@ Garvan's most recent release of slow5tools is *slow5tools-v0.5.0*.
 
 ```
 > cd slow5tools-v0.5.0
-> ./slow5tools view ../slow5_pod5_converter/test/mySlow5/output.blow5 | grep -v ^@ | | head -n 10 | cut -f1-7,9-16
+> ./slow5tools view ../slow5_pod5_converter/test/mySlow5/output.blow5 | grep -v ^@ | head -n 10 | cut -f1-7,9-16
 
 #slow5_version  0.2.0
 #num_read_groups        1
