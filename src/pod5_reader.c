@@ -99,8 +99,6 @@ int pod5_reader(int argc, char *argv[]){
             //SignalRowInfo_t *signal_rows = (SignalRowInfo_t *)malloc(sizeof(SignalRowInfo_t)*signal_row_count);
             std::vector<SignalRowInfo_t *> signal_rows(signal_row_count);
 
-            //if (pod5_get_signal_row_info(file, signal_row_count, signal_rows_indices,
-                                        //&signal_rows) != POD5_OK) {
             if (pod5_get_signal_row_info(file, signal_row_count, signal_rows_indices,
                                         signal_rows.data()) != POD5_OK) {
                 fprintf(stderr,"Failed to get read %ld signal row locations: %s\n", row, pod5_get_error_string());
