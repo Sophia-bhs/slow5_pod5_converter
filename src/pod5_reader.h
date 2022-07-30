@@ -12,6 +12,9 @@
 
 int pod5_reader(int argc, char *argv[]);
 
+/*
+	realtime() - track time used for converting pod5 file to a slow5 file
+*/
 static inline double realtime(void) {
     struct timeval tp;
     struct timezone tzp;
@@ -47,6 +50,9 @@ typedef enum {
     FILE_MID = 1,
 } file_status_t;
 
+/*
+	run_info_to_flat_dic() - convert pod5 run_info structs in to a dict like structure
+*/
 run_info_data_t* run_info_to_flat_dic(RunInfoDictData_t *run_info_data);
 
 #include "slow5_writer.h"
