@@ -14,7 +14,6 @@
 int main (int argc, char *argv[]) {
 
     if (argc != 3) {
-		// if (strcmp(argv[1], "--help") || strcmp(argv[1], "-h")) {
 		printf("\n************************************************************\n");
 		printf("\tWelcome to the Pod5->Slow5 converter 1.0.0!!\t\n");
 		printf("************************************************************\n\n");
@@ -24,10 +23,6 @@ int main (int argc, char *argv[]) {
 		printf("OUTPUT FILE:\n\tPath to a slow5 or blow5 file named by\n");
 		printf("\tthe user which is created via the converter.\n\n");
 		exit(0);
-		// } else {
-		// 	fprintf(stderr, "Usage: %s in_file.pod5 out_file.slow5\n", argv[0]);
-		// 	return EXIT_FAILURE;
-		// }
     }
 
     int ret = pod5_reader(argc, argv);
